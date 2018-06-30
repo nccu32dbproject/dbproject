@@ -1,0 +1,46 @@
+<script type="text/javascript">
+   function showhide(obj){
+	  _Project.style.display = 'none';
+	  _WORKS_ON.style.display = 'none';
+      obj.style.display = 'block';
+   }
+</script> 
+ 
+
+<form action="/update" method="post">  
+  <label for="table_name">Table Name：</label>
+  <ul>
+	<input type="radio" name="table_name" value="Project" onfocus=showhide(_Project)>Project
+	<input type="radio" name="table_name" value="WORKS_ON" onfocus=showhide(_WORKS_ON)>WORKS_ON
+  </ul>
+  <div id='_Project' style='display:none' >
+	<label for="table_name">Select：</label>
+	<ul>
+		rowid: <input type="TEXT" name="pro_rowid"><br>
+	</ul>
+	<label for="table_name">Update：</label><br>
+	<ul>
+		PNAME: <input type="TEXT" name="pro_PNAME"><br>
+		PNUMBER: <input type="TEXT" name="pro_PNUMBER"><br>
+		PLOCATION: <input type="TEXT" name="pro_PLOCATION"><br>
+		DNUM: <input type="TEXT" name="pro_DNUM"><br>
+	</ul>
+  </div>
+    <div id='_WORKS_ON' style='display:none' >
+	<label for="table_name">Select：</label>
+	<ul>
+		rowid: <input type="TEXT" name="work_rowid"><br>
+	</ul>
+	<label for="table_name">Update：</label><br>
+	<ul>
+		ESSN: <input type="TEXT" name="work_ESSN"><br>
+		PNO: <input type="TEXT" name="work_PNO"><br>
+		HOURS: <input type="TEXT" name="work_HOURS"><br>
+	</ul>
+  </div>
+  
+  
+  <input type="submit" value="Submit">
+</form>
+
+<a href="/index">Back to the index</a><br>
