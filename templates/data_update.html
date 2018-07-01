@@ -1,8 +1,10 @@
 <script type="text/javascript">
    function showhide(obj){
-	  _Project.style.display = 'none';
-	  _WORKS_ON.style.display = 'none';
-      obj.style.display = 'block';
+	_Address.style.display = 'none';
+	_Dish.style.display = 'none';
+	_Restaurant.style.display = 'none';
+	_Review.style.display = 'none';
+	obj.style.display = 'block';
    }
 </script> 
  
@@ -10,35 +12,51 @@
 <form action="/update" method="post">  
   <label for="table_name">Table Name：</label>
   <ul>
-	<input type="radio" name="table_name" value="Project" onfocus=showhide(_Project)>Project
-	<input type="radio" name="table_name" value="WORKS_ON" onfocus=showhide(_WORKS_ON)>WORKS_ON
-  </ul>
-  <div id='_Project' style='display:none' >
-	<label for="table_name">Select：</label>
-	<ul>
-		rowid: <input type="TEXT" name="pro_rowid"><br>
+<input type="radio" name="table_name" value="Address" onfocus=showhide(_Address)>Address
+		<input type="radio" name="table_name" value="Dish" onfocus=showhide(_Dish)>Dish
+		<input type="radio" name="table_name" value="Restaurant" onfocus=showhide(_Restaurant)>Restaurant
+		<input type="radio" name="table_name" value="Review" onfocus=showhide(_Review)>Review
 	</ul>
-	<label for="table_name">Update：</label><br>
-	<ul>
-		PNAME: <input type="TEXT" name="pro_PNAME"><br>
-		PNUMBER: <input type="TEXT" name="pro_PNUMBER"><br>
-		PLOCATION: <input type="TEXT" name="pro_PLOCATION"><br>
-		DNUM: <input type="TEXT" name="pro_DNUM"><br>
-	</ul>
-  </div>
-    <div id='_WORKS_ON' style='display:none' >
-	<label for="table_name">Select：</label>
-	<ul>
-		rowid: <input type="TEXT" name="work_rowid"><br>
-	</ul>
-	<label for="table_name">Update：</label><br>
-	<ul>
-		ESSN: <input type="TEXT" name="work_ESSN"><br>
-		PNO: <input type="TEXT" name="work_PNO"><br>
-		HOURS: <input type="TEXT" name="work_HOURS"><br>
-	</ul>
-  </div>
-  
+
+	<div id='_Address' style='display:none' >
+		<label for="table_name">Update：</label>
+		<ul>
+			Area: <input type="TEXT" name="add_Area"><br>
+			District: <input type="TEXT" name="add_District"><br>
+			Street: <input type="TEXT" name="add_Street"><br>
+			RestaurantName: <input type="TEXT" name="add_Name"><br>
+		</ul>
+	</div>
+	<div id='_Dish' style='display:none' >
+		<label for="table_name">Update：</label>
+		<ul>
+			Name: <input type="TEXT" name="dish_Name"><br>
+			Style: <input type="TEXT" name="dish_Style"><br>
+		</ul>
+	</div>
+	<div id='_Restaurant' style='display:none' >
+		<label for="table_name">Update：</label>
+		<ul>
+			Name: <input type="TEXT" name="rest_name"><br>
+			Phone: <input type="TEXT" name="rest_phone"><br>
+			Style: <input type="TEXT" name="rest_style"><br>
+			OT: <input type="TEXT" name="rest_OT"><br>
+			Facebook: <input type="TEXT" name="rest_fb"><br>
+			Seat: <input type="TEXT" name="rest_seat"><br>
+			Payment: <input type="TEXT" name="rest_payment"><br>
+			Line: <input type="TEXT" name="rest_line"><br>
+		</ul>
+	</div>
+	<div id='_Review' style='display:none' >
+		<label for="table_name">Update：</label>
+		<ul>
+			Review: <input type="TEXT" name="rev_review"><br>
+			Restaurant: <input type="TEXT" name="rev_rest"><br>
+			Comment: <input type="TEXT" name="rev_comment"><br>
+			Reply: <input type="TEXT" name="rev_reply"><br>
+			Rating: <input type="TEXT" name="rev_rating"><br>
+		</ul>
+	</div>
   
   <input type="submit" value="Submit">
 </form>

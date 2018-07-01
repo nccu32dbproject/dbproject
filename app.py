@@ -1,9 +1,7 @@
 from flask import Flask, jsonify, render_template, request, redirect, flash
 import sqlite3
 
-
 app = Flask(__name__)
-
 
 @app.route('/')
 def hello():
@@ -57,8 +55,8 @@ def show_table():
             r+='</p>'+'<br>'
 
         return r
-        # return '<p hidden id='result'>{}</p>'.format(final_result)
-        # return '<script > var r=JSON.parse(\'{}\'); </script>'.format(final_result)
+    # return '<p hidden id='result'>{}</p>'.format(final_result)
+    # return '<script > var r=JSON.parse(\'{}\'); </script>'.format(final_result)
 
 @app.route('/data')
 def data():
@@ -72,35 +70,71 @@ def modify():
         conn = sqlite3.connect('./data.sqlite')
         cursor = conn.cursor()
         if operation == 'INSERT':
-            if table_name == 'Project':
-                PNAME = request.form.get('pro_PNAME')
-                PNUMBER = request.form.get('pro_PNUMBER')
-                PLOCATION = request.form.get('pro_PLOCATION')
-                DNUM = request.form.get('pro_DNUM')
+            if table_name == 'Address':
+                Area = request.form.get('add_Area')
+                District = request.form.get('add_District')
+                Street = request.form.get('add_Street')
+                RestaurantName = request.form.get('add_Name')
                 #insecure
                 #sql = cursor.execute('INSERT INTO WORKS_ON (PNAME, PNNUMBER, PLOCATION, DNUM) VALUES (%s, %s, %s);' % (PNAME, PNUMBER, PLOCATION, DNUM))
-                sql = 'INSERT INTO Project (PANME, PNUMBER, PLOCATION, DNUM) VALUES (?, ?, ?, ?);'
-                cursor.execute(sql, (PNAME, PNUMBER, PLOCATION, DNUM))
-            elif table_name == 'WORKS_ON':
-                ESSN = request.form.get('work_ESSN')
-                PNO = request.form.get('work_PNO')
-                HOURS = request.form.get('work_HOURS')
-                sql = 'INSERT INTO WORKS_ON (ESSN, PNO, HOURS) VALUES (?, ?, ?);'
-                cursor.execute(sql, (ESSN, PNO, HOURS,))
+                sql = 'INSERT INTO Address (Area, District, Street, RestaurantName) VALUES (?, ?, ?, ?);'
+                cursor.execute(sql, (Area, District, Street, RestaurantName))
+            elif table_name == 'Dish':
+                Name = request.form.get('dish_Name')
+                Style = request.form.get('dish_Style')
+                sql = 'INSERT INTO Dish (Name, Style) VALUES (?, ?);'
+                cursor.execute(sql, (Name, Style,))
+            elif table_name == 'Restaurant':
+                Name = request.form.get('rest_name')
+                Phone = request.form.get('rest_phone')
+                Style = request.form.get('rest_style')
+                OT = request.form.get('rest_OT')
+                Facebook = request.form.get('rest_fb')
+                Payment = request.form.get('rest_payment')
+                Line = request.form.get('rest_line')
+                sql = 'INSERT INTO Restaurant (Name, Phone, Style, OT, Facebook, Payment, Line) VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
+                cursor.execute(sql, (Name, Phone, Style, OT, Facebook, Seat, Payment, Line))
+            elif table_name == 'Review':
+                Review = request.form.get('rev_review')
+                Restaurant = request.form.get('rev_rest')
+                Comment = request.form.get('rev_comment')
+                Reply = request.form.get('rev_reply')
+                Rating = request.form.get('rev_rating')
+                sql = 'INSERT INTO Review (Review, Restaurant, Comment, Reply, Rating) VALUES (?, ?, ?, ?, ?);'
+                cursor.execute(sql, (Review, Restaurant, Comment, Reply, Rating))
+
         elif operation == 'DELETE':
-            if table_name == 'Project':
-                PNAME = request.form.get('pro_PNAME')
-                PNUMBER = request.form.get('pro_PNUMBER')
-                PLOCATION = request.form.get('pro_PLOCATION')
-                DNUM = request.form.get('pro_DNUM')
-                sql = 'DELETE FROM Project WHERE PANME=? and PNUMBER=? and PLOCATION=? and DNUM=?;'
-                cursor.execute(sql, (PNAME, PNUMBER, PLOCATION, DNUM))
-            elif table_name == 'WORKS_ON':
-                ESSN = request.form.get('work_ESSN')
-                PNO = request.form.get('work_PNO')
-                HOURS = request.form.get('work_HOURS')
-                sql = 'DELETE FROM WORKS_ON WHERE ESSN=? and PNO=? and HOURS=?;'
-                cursor.execute(sql, (ESSN, PNO, HOURS,))
+            if table_name == 'Address':
+                Area = request.form.get('add_Area')
+                District = request.form.get('add_District')
+                Street = request.form.get('add_Street')
+                RestaurantName = request.form.get('add_Name')
+                sql = 'DELETE FROM Address WHERE Area=? and District=? and Street=? and RestaurantName=?;'
+                cursor.execute(sql, (Area, District, Street, RestaurantName))
+            elif table_name == 'Dish':
+                Name = request.form.get('dish_Name')
+                Style = request.form.get('dish_Style')
+                sql = 'DELETE FROM Dish WHERE Name=? and Style=?;'
+                cursor.execute(sql, (Name, Style,))
+            elif table_name == 'Restaurant':
+                Name = request.form.get('rest_name')
+                Phone = request.form.get('rest_phone')
+                Style = request.form.get('rest_style')
+                OT = request.form.get('rest_OT')
+                Facebook = request.form.get('rest_fb')
+                Payment = request.form.get('rest_payment')
+                Line = request.form.get('rest_line')
+                sql = 'DELETE FROM Restaurant WHERE Name=? and Phone=? and Style=? and OT=? and Facebook=? and Payment=? and Line=?;'
+                cursor.execute(sql, (Name, Phone, Style, OT, Facebook, Seat, Payment, Line))
+            elif table_name == 'Review':
+                Review = request.form.get('rev_review')
+                Restaurant = request.form.get('rev_rest')
+                Comment = request.form.get('rev_comment')
+                Reply = request.form.get('rev_reply')
+                Rating = request.form.get('rev_rating')
+                sql = 'DELETE FROM Review WHERE Review=? and Restaurant=? and Comment=? and Reply=? and Rating=?;'
+                cursor.execute(sql, (Review, Restaurant, Comment, Reply, Rating))
+
         cursor.close()
         conn.commit()
         conn.close()
@@ -116,25 +150,40 @@ def update():
     if request.method == 'POST':
         table_name = request.form.get('table_name')
         operation = request.form.get('operation')
-        conn = sqlite3.connect('./data.sqlite')
+        conn = sqlite3.connect('./data.db')
         cursor = conn.cursor()
 
-        if table_name == 'Project':
-            PNAME = request.form.get('pro_PNAME')
-            PNUMBER = request.form.get('pro_PNUMBER')
-            PLOCATION = request.form.get('pro_PLOCATION')
-            DNUM = request.form.get('pro_DNUM')
-            rowid = request.form.get('pro_rowid')
-            sql = 'UPDATE Project SET PANME = ?, PNUMBER = ?, PLOCATION = ?, DNUM = ? WHERE rowid = ?'
-            cursor.execute(sql, (PNAME, PNUMBER, PLOCATION, DNUM, rowid,))
+        if table_name == 'Address':
+            Area = request.form.get('add_Area')
+            District = request.form.get('add_District')
+            Street = request.form.get('add_Street')
+            RestaurantName = request.form.get('add_Name')
+            sql = 'UPDATE Address SET Area=? and District=? and Street=? and RestaurantName=?;'
+            cursor.execute(sql, (Area, District, Street, RestaurantName))
+        elif table_name == 'Dish':
+            Name = request.form.get('dish_Name')
+            Style = request.form.get('dish_Style')
+            sql = 'UPDATE Dish SET Name=? and Style=?;'
+            cursor.execute(sql, (Name, Style,))
+        elif table_name == 'Restaurant':
+            Name = request.form.get('rest_name')
+            Phone = request.form.get('rest_phone')
+            Style = request.form.get('rest_style')
+            OT = request.form.get('rest_OT')
+            Facebook = request.form.get('rest_fb')
+            Payment = request.form.get('rest_payment')
+            Line = request.form.get('rest_line')
+            sql = 'UPDATE Restaurant SET Name=? and Phone=? and Style=? and OT=? and Facebook=? and Payment=? and Line=?;'
+            cursor.execute(sql, (Name, Phone, Style, OT, Facebook, Seat, Payment, Line))
+        elif table_name == 'Review':
+            Review = request.form.get('rev_review')
+            Restaurant = request.form.get('rev_rest')
+            Comment = request.form.get('rev_comment')
+            Reply = request.form.get('rev_reply')
+            Rating = request.form.get('rev_rating')
+            sql = 'UPDATE Review SET Review=? and Restaurant=? and Comment=? and Reply=? and Rating=?;'
+            cursor.execute(sql, (Review, Restaurant, Comment, Reply, Rating))
 
-        elif table_name == 'WORKS_ON':
-            ESSN = request.form.get('work_ESSN')
-            PNO = request.form.get('work_PNO')
-            HOURS = request.form.get('work_HOURS')
-            rowid = request.form.get('work_rowid')
-            sql = 'UPDATE WORKS_ON SET ESSN = ?, PNO = ?, HOURS = ? WHERE rowid = ?'
-            cursor.execute(sql, (ESSN, PNO, HOURS, rowid,))
     cursor.close()
     conn.commit()
     conn.close()
