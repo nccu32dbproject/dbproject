@@ -24,13 +24,25 @@ def show_table():
         areaName=request.form.get('AreaName')
         districtName=request.form.get('DistrictName')
         streetName=request.form.get('StreetName')
+        dishName=request.form.get('DishName')
+        styleName=request.form.get('StyleName')
+        restaurantName=request.form.get('RestaurantName')
+        rating=request.form.get('Rating')
+        paymentName=request.form.get('PaymentName')
+
         conn = sqlite3.connect('./data.db')
         cursor = conn.cursor()
         #insecure
-        sql_result = cursor.execute('SELECT * FROM %s' % (table_name))
-        # sql_result = cursor.execute( 'SELECT * FROM {} WHERE Area={}'.format(table_name,areaName))
-        # sql_result = cursor.execute( 'SELECT * FROM {} WHERE District=\'{}\''.format(table_name,districtName))
-        # sql_result = cursor.execute( 'SELECT * FROM {} WHERE Street LIKE \'%{}%\''.format(table_name,streetName))
+        # sql_result = cursor.execute('SELECT * FROM %s' % (table_name))
+        # sql_result = cursor.execute( 'SELECT * FROM Address WHERE Area={}'.format(areaName))
+        # sql_result = cursor.execute( 'SELECT * FROM Address WHERE District=\'{}\''.format(districtName))
+        # sql_result = cursor.execute( 'SELECT * FROM Address WHERE Street LIKE \'%{}%\''.format(streetName))
+        # sql_result = cursor.execute( 'SELECT * FROM Dish WHERE Name LIKE \'%{}%\''.format(dishName))
+        # sql_result = cursor.execute( 'SELECT * FROM Style WHERE Style LIKE \'%{}%\''.format(styleName))
+        # sql_result = cursor.execute( 'SELECT * FROM Restaurant WHERE Name LIKE \'%{}%\''.format(restaurantName))
+        # sql_result = cursor.execute( 'SELECT * FROM Review WHERE Rating >= {}'.format(rating))
+        sql_result = cursor.execute( 'SELECT * FROM Payment WHERE Method=\'{}\''.format(paymentName))
+
         final_result = sql_result.fetchall()
         cursor.close()
         conn.close()
@@ -90,7 +102,6 @@ def modify():
         conn.commit()
         conn.close()
     return redirect('/data')
-
 
 @app.route('/data_update')
 def data_update():
