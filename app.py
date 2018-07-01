@@ -1,13 +1,13 @@
 from flask import Flask, jsonify, render_template, request, redirect, flash
 import sqlite3
 
-  
+
 app = Flask(__name__)
 
 
 @app.route('/')
-def hello():    
-    return "Hello World!"
+def hello():
+    return '<a href="/index">Hello World!</a>'
 
 @app.route('/index')
 def index():
@@ -21,7 +21,7 @@ def search_table():
 def show_table():
     if request.method == 'POST':
         table_name = request.form.get('table_name')
-        conn = sqlite3.connect('./data.sqlite')
+        conn = sqlite3.connect('./data.db')
         cursor = conn.cursor()
         #insecure
         #result = cursor.execute('SELECT * FROM %s' % (table_name,))
@@ -30,7 +30,7 @@ def show_table():
         cursor.close()
         conn.close()
         return jsonify(final_result)
-    
+
 @app.route('/data')
 def data():
     return render_template('data.html')
@@ -63,7 +63,7 @@ def modify():
                 PNAME = request.form.get('pro_PNAME')
                 PNUMBER = request.form.get('pro_PNUMBER')
                 PLOCATION = request.form.get('pro_PLOCATION')
-                DNUM = request.form.get('pro_DNUM')                
+                DNUM = request.form.get('pro_DNUM')
                 sql = 'DELETE FROM Project WHERE PANME=? and PNUMBER=? and PLOCATION=? and DNUM=?;'
                 cursor.execute(sql, (PNAME, PNUMBER, PLOCATION, DNUM))
             elif table_name == 'WORKS_ON':
@@ -76,7 +76,7 @@ def modify():
         conn.commit()
         conn.close()
     return redirect('/data')
-    
+
 
 @app.route('/data_update')
 def data_update():
@@ -84,13 +84,13 @@ def data_update():
 
 @app.route('/update', methods=['POST'])
 def update():
-    
+
     if request.method == 'POST':
         table_name = request.form.get('table_name')
         operation = request.form.get('operation')
         conn = sqlite3.connect('./data.sqlite')
         cursor = conn.cursor()
-        
+
         if table_name == 'Project':
             PNAME = request.form.get('pro_PNAME')
             PNUMBER = request.form.get('pro_PNUMBER')
@@ -99,7 +99,7 @@ def update():
             rowid = request.form.get('pro_rowid')
             sql = 'UPDATE Project SET PANME = ?, PNUMBER = ?, PLOCATION = ?, DNUM = ? WHERE rowid = ?'
             cursor.execute(sql, (PNAME, PNUMBER, PLOCATION, DNUM, rowid,))
-            
+
         elif table_name == 'WORKS_ON':
             ESSN = request.form.get('work_ESSN')
             PNO = request.form.get('work_PNO')
@@ -109,7 +109,7 @@ def update():
             cursor.execute(sql, (ESSN, PNO, HOURS, rowid,))
     cursor.close()
     conn.commit()
-    conn.close()    
+    conn.close()
     return redirect('/data_update')
 
 if __name__=='__main__':
