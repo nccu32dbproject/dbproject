@@ -29,7 +29,9 @@ def show_table():
         final_result = sql_result.fetchall()
         cursor.close()
         conn.close()
-        return jsonify(final_result)
+        # return jsonify(final_result)
+        return '<p hidden id='result'>{}</p>'.format(final_result)
+        # return '<script > var r=JSON.parse(\'{}\'); </script>'.format(final_result)
 
 @app.route('/data')
 def data():
