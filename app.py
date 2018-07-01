@@ -21,16 +21,28 @@ def search_table():
 def show_table():
     if request.method == 'POST':
         table_name = request.form.get('table_name')
+        areaName=request.form.get('AreaName')
+        districtName=request.form.get('DistrictName')
+        streetName=request.form.get('StreetName')
         conn = sqlite3.connect('./data.db')
         cursor = conn.cursor()
         #insecure
-        #result = cursor.execute('SELECT * FROM %s' % (table_name,))
-        sql_result = cursor.execute( 'SELECT * FROM {}'.format(table_name))
+        sql_result = cursor.execute('SELECT * FROM %s' % (table_name))
+        # sql_result = cursor.execute( 'SELECT * FROM {} WHERE Area={}'.format(table_name,areaName))
+        # sql_result = cursor.execute( 'SELECT * FROM {} WHERE District=\'{}\''.format(table_name,districtName))
+        # sql_result = cursor.execute( 'SELECT * FROM {} WHERE Street LIKE \'%{}%\''.format(table_name,streetName))
         final_result = sql_result.fetchall()
         cursor.close()
         conn.close()
         # return jsonify(final_result)
-        return '<p hidden id='result'>{}</p>'.format(final_result)
+        r=''
+        for i in final_result:
+            for j in i:
+                r+='<p>'+str(j)+'</p>'
+            r+='<br>'
+
+        return r
+        # return '<p hidden id='result'>{}</p>'.format(final_result)
         # return '<script > var r=JSON.parse(\'{}\'); </script>'.format(final_result)
 
 @app.route('/data')
@@ -115,5 +127,4 @@ def update():
     return redirect('/data_update')
 
 if __name__=='__main__':
-    # app.run(debug=True)
-    print(sqlite3.connect('./data.db').cursor().execute( 'SELECT * FROM Address').fetchone())
+    app.run(debug=True)
