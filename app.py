@@ -43,6 +43,7 @@ def show_table():
         # sql_result = cursor.execute( 'SELECT * FROM Review WHERE Rating >= {}'.format(rating))
         # sql_result = cursor.execute( 'SELECT * FROM Payment WHERE Method=\'{}\''.format(paymentName))
         sql = 'SELECT Name,OT,Style.style,Area,District,Street,Rating FROM Restaurant INNER join Style ON Restaurant.Style = StyleID INNER join Address ON Restaurant.Name = Address.RestaurantName INNER join Review ON Restaurant.Name = Review.Restaurant '
+        sql_result = cursor.execute(sql)
 
         final_result = sql_result.fetchall()
         cursor.close()
