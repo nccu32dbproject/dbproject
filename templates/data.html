@@ -8,59 +8,70 @@ function showhide(obj){
 }
 </script>
 
-<p>insert or delete data from table</p>
+<head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<p style="margin-left:50px;">insert or delete data from table</p>
 <form action="/modify" method="post">
-	<label for="table_name">Operation：</label>
-	<ul>
-		<input type="radio" name="operation" value="INSERT">INSERT
-		<input type="radio" name="operation" value="DELETE">DELETE
-	</ul>
-	<label for="table_name">Table Name：</label>
-	<ul>
-		<input type="radio" name="table_name" value="Address" onfocus=showhide(_Address)>Address
-		<input type="radio" name="table_name" value="Dish" onfocus=showhide(_Dish)>Dish
-		<input type="radio" name="table_name" value="Restaurant" onfocus=showhide(_Restaurant)>Restaurant
-		<input type="radio" name="table_name" value="Review" onfocus=showhide(_Review)>Review
-	</ul>
-	<div id='_Address' style='display:none' >
-		<label for="table_name">Address：</label>
-		<ul>
-			Area: <input type="TEXT" name="add_Area"><br>
-			District: <input type="TEXT" name="add_District"><br>
-			Street: <input type="TEXT" name="add_Street"><br>
-			RestaurantName: <input type="TEXT" name="add_Name"><br>
-		</ul>
-	</div>
-	<div id='_Dish' style='display:none' >
-		<label for="table_name">Dish：</label>
-		<ul>
-			Name: <input type="TEXT" name="dish_Name"><br>
-			Style: <input type="TEXT" name="dish_Style"><br>
-		</ul>
-	</div>
-	<div id='_Restaurant' style='display:none' >
-		<label for="table_name">Restaurant：</label>
-		<ul>
-			Name: <input type="TEXT" name="rest_name"><br>
-			Phone: <input type="TEXT" name="rest_phone"><br>
-			Style: <input type="TEXT" name="rest_style"><br>
-			OT: <input type="TEXT" name="rest_OT"><br>
-			Facebook: <input type="TEXT" name="rest_fb"><br>
-			Payment: <input type="TEXT" name="rest_payment"><br>
-			Line: <input type="TEXT" name="rest_line"><br>
-		</ul>
-	</div>
-	<div id='_Review' style='display:none' >
-		<label for="table_name">Review：</label>
-		<ul>
-			Review: <input type="TEXT" name="rev_review"><br>
-			Restaurant: <input type="TEXT" name="rev_rest"><br>
-			Comment: <input type="TEXT" name="rev_comment"><br>
-			Reply: <input type="TEXT" name="rev_reply"><br>
-			Rating: <input type="TEXT" name="rev_rating"><br>
-		</ul>
-	</div>
-	<input type="submit" value="Submit">
+
+	<body>
+		<label style="color:blue;margin-left:50px;width:300px"for="table_name">Operation:</label>
+		<i class="material-icons">computer</i>
+		<body>
+
+			<ul>
+				<input type="radio" name="operation" value="INSERT">INSERT
+				<input type="radio" name="operation" value="DELETE">DELETE
+			</ul>
+			<label style="color:blue;margin-left:50px;width:300px"for="table_name">Table Name:</label>
+			<i class="material-icons">computer</i>
+			<ul>
+				<input type="radio" name="table_name" value="Address" onfocus=showhide(_Address)>Address
+				<input type="radio" name="table_name" value="Dish" onfocus=showhide(_Dish)>Dish
+				<input type="radio" name="table_name" value="Restaurant" onfocus=showhide(_Restaurant)>Restaurant
+				<input type="radio" name="table_name" value="Review" onfocus=showhide(_Review)>Review
+			</ul>
+			<div id='_Address' style='display:none' >
+				<label for="table_name">Address:</label>
+				<ul>
+					Area: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="add_Area"><br>
+					District: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="add_District"><br>
+					Street: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="add_Street"><br>
+					RestaurantName: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="add_Name"><br>
+				</ul>
+			</div>
+			<div id='_Dish' style='display:none' >
+				<label for="table_name">Dish:</label>
+				<ul>
+					Name: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="dish_Name"><br>
+					Style: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="dish_Style"><br>
+				</ul>
+			</div>
+			<div id='_Restaurant' style='display:none' >
+				<label for="table_name">Restaurant:</label>
+				<ul>
+					Name: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rest_name"><br>
+					Phone: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rest_phone"><br>
+					Style: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rest_style"><br>
+					OT: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rest_OT"><br>
+					Facebook: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rest_fb"><br>
+					Payment: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rest_payment"><br>
+					Line: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rest_line"><br>
+				</ul>
+			</div>
+			<div id='_Review' style='display:none' >
+				<label for="table_name">Review:</label>
+				<ul>
+					Review: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rev_review"><br>
+					Restaurant: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rev_rest"><br>
+					Comment: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rev_comment"><br>
+					Reply: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rev_reply"><br>
+					Rating: <input style="border: 2px solid black;border-radius: 5px; width:300px;background-color: lightblue; position=fixed"type="TEXT" name="rev_rating"><br>
+				</ul>
+			</div>
+	<input style="border: 2px solid black;border-radius: 5px;background-color: aqua;margin: 40px" type="submit" value="Submit">
+
 </form>
 
 <a href="/index">Back to the index</a><br>
