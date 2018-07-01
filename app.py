@@ -41,7 +41,8 @@ def show_table():
         # sql_result = cursor.execute( 'SELECT * FROM Style WHERE Style LIKE \'%{}%\''.format(styleName))
         # sql_result = cursor.execute( 'SELECT * FROM Restaurant WHERE Name LIKE \'%{}%\''.format(restaurantName))
         # sql_result = cursor.execute( 'SELECT * FROM Review WHERE Rating >= {}'.format(rating))
-        sql_result = cursor.execute( 'SELECT * FROM Payment WHERE Method=\'{}\''.format(paymentName))
+        # sql_result = cursor.execute( 'SELECT * FROM Payment WHERE Method=\'{}\''.format(paymentName))
+        sql = 'SELECT Name,OT,Style.style,Area,District,Street,Rating FROM Restaurant INNER join Style ON Restaurant.Style = StyleID INNER join Address ON Restaurant.Name = Address.RestaurantName INNER join Review ON Restaurant.Name = Review.Restaurant '
 
         final_result = sql_result.fetchall()
         cursor.close()
@@ -49,9 +50,10 @@ def show_table():
         # return jsonify(final_result)
         r=''
         for i in final_result:
+            r+='<p>'
             for j in i:
-                r+='<p>'+str(j)+'</p>'
-            r+='<br>'
+                r+=str(j)+' '
+            r+='</p>'+'<br>'
 
         return r
         # return '<p hidden id='result'>{}</p>'.format(final_result)
