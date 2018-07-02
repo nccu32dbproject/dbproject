@@ -40,7 +40,12 @@ def show_table():
         # sql_result = cursor.execute( 'SELECT * FROM Restaurant WHERE Name LIKE \'%{}%\''.format(restaurantName))
         # sql_result = cursor.execute( 'SELECT * FROM Review WHERE Rating >= {}'.format(rating))
         # sql_result = cursor.execute( 'SELECT * FROM Payment WHERE Method=\'{}\''.format(paymentName))
-        sql = 'SELECT Name,OT,Style.style,Area,District,Street,Rating FROM Restaurant INNER join Style ON Restaurant.Style = StyleID INNER join Address ON Restaurant.Name = Address.RestaurantName INNER join Review ON Restaurant.Name = Review.Restaurant '
+        sql = 'SELECT Name,OT,Style.style,Area,District,Street,Rating \
+            FROM Restaurant \
+            INNER join Style ON Restaurant.Style = StyleID \
+            INNER join Address ON Restaurant.Name = Address.RestaurantName \
+            INNER join Review ON Restaurant.Name = Review.Restaurant '
+
         w=''
         if areaName : w+='Area=\'{}\' AND '.format(areaName)
         if districtName : w+='District=\'{}\' AND '.format(districtName)
@@ -48,11 +53,13 @@ def show_table():
         if styleName : w+='Style.Style LIKE \'%{}%\' AND '.format(styleName)
         if restaurantName : w+='Restaurant.Name LIKE \'%{}%\' AND '.format(restaurantName)
         if rating : w+='Rating >= {} AND '.format(rating)
-        if w : w='WHERE '+w[:-4]
-        sql+=w
-        print(sql)
-        sql_result = cursor.execute(sql)
+        if paymentName : w+='Payment LIKE \'%{}%\' AND '.format(paymentName)
+        if dishName :
+            SID = cursor.execute('SELECT Style FROM Dish WHERE Name LIKE \'%{}%\' ;'.format(dishName)).fetchone()
+            w+='Restaurant.Style = {} AND '.format(SID[0])
 
+        if w : sql+='WHERE '+w[:-4]
+        sql_result = cursor.execute(sql+'ORDER BY Rating DESC;')
         final_result = sql_result.fetchall()
         cursor.close()
         conn.close()
@@ -66,24 +73,46 @@ def show_table():
             r+='<p>Address: {}</p>'.format(' '.join(i[3:-1]))
             r+='<br>'
 
-        if not r : r='No result.'
-        return r
+        return r if r else 'No result.'
     # return '<p hidden id='result'>{}</p>'.format(final_result)
     # return '<script > var r=JSON.parse(\'{}\'); </script>'.format(final_result)
 
 @app.route('/showR/<name>')
-def profile(name):
+def showR(name):
     conn = sqlite3.connect('./data.db')
     cursor = conn.cursor()
-    sql = 'SELECT Restaurant.Name,Dish.Name FROM Restaurant INNER join Style ON Restaurant.Style = Style.StyleID Left OUTER join Dish ON Dish.Style = Style.StyleID where Restaurant.Name = \'{}\' '.format(name)
+    sql = 'SELECT Restaurant.Name,Dish.Name \
+        FROM Restaurant INNER join Style ON Restaurant.Style = Style.StyleID \
+        Left OUTER join Dish ON Dish.Style = Style.StyleID \
+        where Restaurant.Name = \'{}\' ;'.format(name)
     sql_result = cursor.execute(sql)
-
     final_result = sql_result.fetchall()
-    cursor.close()
-    conn.close()
+
     r='<h1>{}</h1>'.format(final_result[0][0])
     for i in final_result:
         r+='<p>Dish: {}</p>'.format(i[1])
+    r+='<br>'
+
+    sql = 'SELECT Comment, Rating \
+        FROM Review \
+        where Restaurant = \'{}\' ;'.format(name)
+    sql_result = cursor.execute(sql)
+    final_result = sql_result.fetchall()
+
+    if final_result:
+        r+='<br><p>Review:</p>'
+        for i in final_result:
+            r+='<p>Rating: {}</p>'.format(i[1])
+            if i[0]:
+                r+='<p>Conmment:{} </p>'.format(i[0])
+            else:
+                r+='<p>No conmment.</p>'
+            r+='<br>'
+    else:
+        r+='<br><p>No review.</p>'
+
+    cursor.close()
+    conn.close()
 
     return r
 
@@ -220,16 +249,3 @@ def update():
 
 if __name__=='__main__':
     app.run(debug=True)
-    # conn = sqlite3.connect('./data.db')
-    # cursor = conn.cursor()
-    # sql = 'UPDATE Restaurant SET Payment = \'d\' WHERE Style <3;'
-    # sql_result = cursor.execute(sql)
-    # sql = 'UPDATE Restaurant SET Payment = \'abc\' WHERE Style >3;'
-    # sql_result = cursor.execute(sql)
-    # sql = 'UPDATE Restaurant SET Payment = \'ade\' WHERE Style >10;'
-    # sql_result = cursor.execute(sql)
-    # sql = 'UPDATE Restaurant SET Payment = \'fg\' WHERE Style >15;'
-    # sql_result = cursor.execute(sql)
-    #
-    # cursor.close()
-    # conn.close()
