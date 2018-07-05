@@ -18,7 +18,7 @@ def search_table():
 @app.route('/show_table',methods=['POST'])
 def show_table():
     if request.method == 'POST':
-        table_name = request.form.get('table_name')
+        # table_name = request.form.get('table_name')
         areaName=request.form.get('AreaName')
         districtName=request.form.get('DistrictName')
         streetName=request.form.get('StreetName')
@@ -40,7 +40,7 @@ def show_table():
         # sql_result = cursor.execute( 'SELECT * FROM Restaurant WHERE Name LIKE \'%{}%\''.format(restaurantName))
         # sql_result = cursor.execute( 'SELECT * FROM Review WHERE Rating >= {}'.format(rating))
         # sql_result = cursor.execute( 'SELECT * FROM Payment WHERE Method=\'{}\''.format(paymentName))
-        sql = 'SELECT Name,OT,Style.style,Area,District,Street,Rating \
+        sql = 'SELECT Name,OT,Style.style,Area,District,Street,Rating,Phone,Payment,Facebook \
             FROM Restaurant \
             INNER join Style ON Restaurant.Style = StyleID \
             INNER join Address ON Restaurant.Name = Address.RestaurantName \
@@ -70,12 +70,21 @@ def show_table():
             r+='<p>Rating: {}</p>'.format(i[6])
             r+='<p>Open: {}</p>'.format(i[1])
             r+='<p>Style: {}</p>'.format(i[2])
-            r+='<p>Address: {}</p>'.format(' '.join(i[3:-1]))
+            r+='<p>Address: {}</p>'.format(' '.join(i[3:6]))
+            r+='<p>Phone: {}</p>'.format(i[7])
+            t=''
+            if 'a' in i[8] : t+='Cash, '
+            if 'b' in i[8] : t+='Visa, '
+            if 'c' in i[8] : t+='Master, '
+            if 'd' in i[8] : t+='Octopus Card, '
+            if 'e' in i[8] : t+='Apply Pay, '
+            if 'f' in i[8] : t+='Alipay, '
+            if 'g' in i[8] : t+='Wechat Pay, '
+            r+='<p>Payment: {}</p>'.format(t[:-2])
+            if i[9] : r+='Website: <a href=\"{}\">{}</a>'.format(i[9],i[9])
             r+='<br>'
 
         return r if r else 'No result.'
-    # return '<p hidden id='result'>{}</p>'.format(final_result)
-    # return '<script > var r=JSON.parse(\'{}\'); </script>'.format(final_result)
 
 @app.route('/showR/<name>')
 def showR(name):
