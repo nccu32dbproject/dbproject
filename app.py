@@ -259,13 +259,3 @@ def update():
 import random
 if __name__=='__main__':
     app.run(debug=True)
-    # conn = sqlite3.connect('./data.db')
-    # cursor = conn.cursor()
-    # for i in range(1,20):
-    #     n=''.join(sorted(random.sample(['a','b','c','d','e','f','g'],random.randint(1,7))))
-    #     sql = 'update Restaurant set Payment = \'{}\' where Style = {};'.format(n,i)
-    #     sql_result = cursor.execute(sql)
-    # print(cursor.execute('SELECT Style,Payment FROM Restaurant').fetchall())
-    # conn.commit()
-    # cursor.close()
-    # conn.close()
